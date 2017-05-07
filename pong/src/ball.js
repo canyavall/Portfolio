@@ -3,10 +3,10 @@
  * @type {Object}
  */
 export class Ball{
-  constructor(radius, position, context, players) {
+  constructor(radius, position, ctx, players) {
     this.radius = radius;
     this.position = position;
-    this.context = context;
+    this.ctx = ctx;
     this.players = players;
     this.speed = 0.1;
     this.changeRightY = false;
@@ -20,11 +20,11 @@ export class Ball{
  * Renders the ball in the canvas
  */
 render() {
-  this.context.beginPath();
-  this.context.fillStyle = 'white';
-  this.context.fill();
-  this.context.arc(this.position[0], this.position[1], this.radius, 0,2*Math.PI);
-  this.context.stroke();
+  this.ctx.beginPath();
+  this.ctx.arc(this.position[0], this.position[1], this.radius, 0,2*Math.PI);
+  this.ctx.fillStyle = 'white';
+  this.ctx.fill();
+  this.ctx.stroke();
 };
 
 /**
@@ -49,24 +49,20 @@ boardCollision (xPositionRadius, yPositionRadius){
       this.direction[1] *= -1
       this.position[1] = 0 + this.radius;
     };
-    if (yPositionRadius >= this.context.canvas.clientHeight){
+    if (yPositionRadius >= this.ctx.canvas.clientHeight){
       this.direction[1] *= -1
-      this.position[1] = this.context.canvas.clientHeight - this.radius;
+      this.position[1] = this.ctx.canvas.clientHeight - this.radius;
     };
     if (xPositionRadius <= 0){
       this.direction[0] *= -1;
       this.position[0] = 0 + this.radius;
       this.players[1].score++;
-      this.players[1].strikeCounter++;
-      this.players[0].strikeCounter--;
       this.players[1].scoreTime = new Date().getTime();
     };
-    if (xPositionRadius >= this.context.canvas.clientWidth){
+    if (xPositionRadius >= this.ctx.canvas.clientWidth){
       this.direction[0] *= -1
-      this.position[0] = this.context.canvas.clientWidth - this.radius;
+      this.position[0] = this.ctx.canvas.clientWidth - this.radius;
       this.players[0].score++;
-      this.players[1].strikeCounter--;
-      this.players[0].strikeCounter++;
       this.players[0].scoreTime = new Date().getTime();
     }
 }

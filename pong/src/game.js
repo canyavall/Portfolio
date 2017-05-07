@@ -95,7 +95,6 @@ export class Game {
     canvas.id     = "canvas";
     canvas.width  = this.width;
     canvas.height = this.height;
-    canvas.style = "border:1px solid #000000;";
     window.document.body.appendChild(canvas);
 
     //Get canvas
@@ -103,40 +102,44 @@ export class Game {
   }
 
   /**
-  * All eventlisteners are here
-  */
-  listeners() {
+   * Pepare the listeners
+   */
+  listeners () {
     document.addEventListener('keydown', (event) => {
-      if (event.keyCode == 87) {
-        this.paddleLeft.directionTop = true;
-      }else if (event.keyCode == 83){
-        this.paddleLeft.directionBottom = true;
-      }else if (event.keyCode == 81){
-        this.ball.changeLeftY = true;
-      }else if (event.keyCode == 80) {
-        this.paddleRight.directionTop = true;
-      }else if (event.keyCode == 76){
-        this.paddleRight.directionBottom = true;
-      }else if (event.keyCode == 186){
-        this.ball.changeRightY = true;
-      }
+      this.changePropertyEvent (event.keyCode, true)
     });
 
     document.addEventListener('keyup', (event) => {
-      if (event.keyCode == 87) {
-        this.paddleLeft.directionTop = false;
-      }else if (event.keyCode == 83){
-        this.paddleLeft.directionBottom = false;
-      }else if (event.keyCode == 81){
-        this.ball.changeLeftY = false;
-      }else if (event.keyCode == 80) {
-        this.paddleRight.directionTop = false;
-      }else if (event.keyCode == 76){
-        this.paddleRight.directionBottom = false;
-      }else if (event.keyCode == 186){
-        this.ball.changeRightY = false;
-      }
+      this.changePropertyEvent (event.keyCode, false)
     });
+  }
+
+  /**
+   * Change objects properties depending on the event runed
+   * @param  {[integer]} keyCode     [description]
+   * @param  {[boolean]} value       [description]
+   */
+  changePropertyEvent (keyCode, value) {
+    switch(keyCode) {
+      case 87:
+        this.paddleLeft.directionTop = value;
+        break;
+      case 83:
+        this.paddleLeft.directionBottom = value;
+        break;
+      case 81:
+        this.ball.changeLeftY = value;
+        break;
+      case 80:
+        this.paddleRight.directionTop = value;
+        break;
+      case 76:
+        this.paddleRight.directionBottom = value;
+          break;
+      case 186:
+        this.ball.changeRightY = value;
+          break;
+    }
   }
 
   /**
@@ -167,20 +170,8 @@ export class Game {
   scoreMessages() {
     // Actual date to control the score message
     let actualDate = new Date().getTime();
-
     for (var i = 0; i < this.players.length; i++) {
-      if (this.players[i].scoreTime + 2000 >= actualDate && this.players[i].scoreTime != 0){
-        this.players[i].scoreMsg();
-        if (this.players[i].strikeCounter === 3){
-          this.players[i].strikeMsg("Good Job!");
-        }else if (this.players[i].strikeCounter === 5){
-          this.players[i].strikeMsg("Awesome!");
-        }else if (this.players[i].strikeCounter === 7){
-        this.players[i].strikeMsg("OMG!");
-        }else if (this.players[i].strikeCounter === 10){
-          this.players[i].strikeMsg("God like!");
-        }
-      }
+      if (this.players[i].scoreTime + 2000 >= actualDate && this.players[i].scoreTime != 0) this.players[i].scoreMsg();
     }
   }
 

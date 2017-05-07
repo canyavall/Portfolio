@@ -1,10 +1,10 @@
 /**
  * Object Board
- * @param {[object]} context Canvas context
+ * @param {[object]} ctx Canvas context
  */
 export class Board{
-  constructor(context){
-    this.context = context;
+  constructor(ctx){
+    this.ctx = ctx;
   }
 
   /**
@@ -12,14 +12,14 @@ export class Board{
    */
   render() {
     //draw the board
-    this.context.fillStyle = 'black';
-    this.context.fillRect(0, 0, this.context.canvas.clientWidth, this.context.canvas.clientHeight);
+    this.ctx.fillStyle = '#FD8844';
+    this.ctx.fillRect(0, 0, this.ctx.canvas.clientWidth, this.ctx.canvas.clientHeight);
 
     //draw the line
-    this.context.beginPath();
-    this.context.moveTo(this.context.canvas.clientWidth/2, 0);
-    this.context.lineTo(this.context.canvas.clientWidth/2, this.context.canvas.clientHeight);
-    this.context.strokeStyle = 'white';
-    this.context.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.ctx.canvas.clientWidth/2, 0);
+    this.ctx.lineTo(this.ctx.canvas.clientWidth/2, this.ctx.canvas.clientHeight);
+    this.ctx.strokeStyle = 'white';
+    this.ctx.stroke();
   }
 }
