@@ -17,16 +17,23 @@ export class Pacman {
     let arc1Start = 0.25 * Math.PI,
         arc1End = 1.25 * Math.PI,
         arc2Start = 0.75 * Math.PI,
-        arc2End = 1.75 * Math.PI;
+        arc2End = 1.75 * Math.PI,
+        eyeX = this.position[0] + 2,
+        eyeY = this.position[1] - 6;
+
     if (this.direction[0] === true){
       arc2Start = 1.75 * Math.PI;
       arc2End = 0.75 * Math.PI;
+      eyeX = this.position[0] - 6,
+      eyeY = this.position[1] - 2;
     }
     if (this.direction[1] === true){
       arc1Start = 0.75 * Math.PI;
       arc1End = 1.75 * Math.PI;
       arc2Start = 1.25 * Math.PI;
       arc2End = 0.25 * Math.PI;
+      eyeX = this.position[0] + 6,
+      eyeY = this.position[1] + 2;
     }
     if (this.direction[2] === true){
       arc1Start = 1.25 * Math.PI;
@@ -40,6 +47,10 @@ export class Pacman {
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.arc(this.position[0], this.position[1], this.radius, arc2Start, arc2End, false);
+    this.ctx.fill();
+    this.ctx.beginPath();
+    this.ctx.arc(eyeX, eyeY, 2, 0 * Math.PI, 1.75 * Math.PI, false);
+    this.ctx.fillStyle = "black";
     this.ctx.fill();
   };
     /**
@@ -61,7 +72,7 @@ export class Pacman {
     if (this.direction[1] && this.go[1]) this.position[1] += this.speed;
     if (this.direction[2] && this.go[2]) this.position[0] -= this.speed;
     if (this.direction[3] && this.go[3]) this.position[0] += this.speed;
-  } 
+  }
   /**
    * [boardCollision description]
    * @param  {[integer]} xPositionPlusRadius  Radius plus x position
