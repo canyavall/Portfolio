@@ -13,10 +13,10 @@ export class Mob {
  */
   move(level){
     //prepare variables
-    let xPositionPlusRadius = this.position[0] + this.radius;
-    let xPositionMinusRadius = this.position[0] - this.radius;
-    let yPositionPlusRadius = this.position[1] + this.radius;
-    let yPositionMinusRadius = this.position[1] - this.radius;
+    let xPositionPlusRadius = this.position[0] + this.radius + 1;
+    let xPositionMinusRadius = this.position[0] - this.radius - 1;
+    let yPositionPlusRadius = this.position[1] + this.radius + 1;
+    let yPositionMinusRadius = this.position[1] - this.radius - 1;
     this.go = [true, true, true, true];
 
     //Check Collisions
@@ -32,19 +32,18 @@ export class Mob {
 
   wallCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius, level) {
     for (let i = 0; i < level.walls.length; i++) {
-      let startX = level.walls[i].start[0],
-          startY = level.walls[i].start[1],
-          endX = level.walls[i].end[0],
-          endY = level.walls[i].end[1],
-          vWall = false;
+      let startX = level.walls[i][0],
+          startY = level.walls[i][1],
+          endX = level.walls[i][0] + level.walls[i][2],
+          endY = level.walls[i][1] + level.walls[i][3];
+        if (startX === endX && xPositionMinusRadius === startX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[2] = false; //Vertical line from right
+        // if (yPositionMinusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius > endX) this.go[0] = false;
+        // if (yPositionMinusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius > startX) this.go[0] = false;
+        // if (yPositionPlusRadius === startY && xPositionMinusRadius < endX && xPositionPlusRadius > endX) this.go[1] = false;
+        // if (startX != endX && yPositionPlusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius >= startX) this.go[1] = false;
+        // if (xPositionMinusRadius === endX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[2] = false;
 
-      if (yPositionMinusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius > endX) this.go[0] = false;
-      if (yPositionPlusRadius === startY && xPositionMinusRadius < endX && xPositionPlusRadius > endX) this.go[1] = false;
-      if (startX === endX && xPositionMinusRadius === startX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[2] = false;
-      if (yPositionMinusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius > startX) this.go[0] = false;
-      if (startX != endX && yPositionPlusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius >= startX) this.go[1] = false;
-      if (xPositionMinusRadius === endX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[2] = false;
-      if (xPositionPlusRadius === startX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[3] = false;
+        // if (xPositionPlusRadius === startX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[3] = false;
     }
   }
 
@@ -53,18 +52,18 @@ export class Mob {
    * @return {[type]} [description]
    */
   newDirection(){
-    let possibleDirections = [];
-
-    for (let i = 0; i < this.go.length; i++) {
-      if (this.go[i]) possibleDirections.push(i);
-    }
-    if (possibleDirections.length < 4){
-      //console.log(this.position);
-      //console.log(possibleDirections);
-      this.direction = [false, false, false, false];
-      let ii = Math.floor(Math.random() * possibleDirections.length);
-      // console.log(ii);
-      this.direction[possibleDirections[ii]] = true;
-    }
+    // let possibleDirections = [];
+    //
+    // for (let i = 0; i < this.go.length; i++) {
+    //   if (this.go[i]) possibleDirections.push(i);
+    // }
+    // if (possibleDirections.length < 4){
+    //   console.log(this.position);
+    //   //console.log(possibleDirections);
+    //   this.direction = [false, false, false, false];
+    //   let ii = Math.floor(Math.random() * possibleDirections.length);
+    //   // console.log(ii);
+    //   this.direction[possibleDirections[ii]] = true;
+    // }
   }
 }

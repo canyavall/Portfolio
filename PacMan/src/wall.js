@@ -1,15 +1,10 @@
 export class Wall {
-  constructor(ctx, start, end) {
+  constructor(ctx, rect) {
     this.ctx = ctx;
-    this.start = start;
-    this.end = end;
+    this.rect = rect;
   }
   render() {
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.start[0], this.start[1]);
-    this.ctx.lineTo(this.end[0], this.end[1]);
-    this.ctx.strokeStyle = 'white';
-    this.ctx.lineWidth = 1;
-    this.ctx.stroke();
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillRect(this.rect[0], this.rect[1], this.rect[2], this.rect[3]);
   }
 }
