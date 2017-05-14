@@ -13,6 +13,10 @@ export class Level {
     //Now, we are using a fixed pool of walls
 
     let poolWalls = [
+                    [[0,0],[this.ctx.canvas.clientWidth,0]],
+                    [[0,0],[0,this.ctx.canvas.clientHeight]],
+                    [[0,this.ctx.canvas.clientHeight],[this.ctx.canvas.clientWidth,this.ctx.canvas.clientHeight]],
+                    [[this.ctx.canvas.clientWidth,0],[this.ctx.canvas.clientWidth,this.ctx.canvas.clientHeight]],
                     [[21,0],[21,38]],
                     [[21,60],[21,90]],
                     [[0,90],[21,90]],
@@ -22,8 +26,6 @@ export class Level {
                     [[120,21],[120,60]],
                     [[165,21],[165,60]],
                     [[143,42],[143,60]],
-
-
                   ];
     let walls = [];
     for (let i = 0; i < poolWalls.length; i++) {
