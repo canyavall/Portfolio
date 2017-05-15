@@ -13,8 +13,11 @@ export class Game {
 
     //Create objects
     this.board = new Board(this.ctx);
-    this.pacman = new Pacman(this.ctx, false);
-    this.pinki = new Ghost(this.ctx, true);
+    this.pacman = new Pacman(this.ctx, false, "Yellow");
+    this.pinki = new Ghost(this.ctx, true, "Pink");
+    this.bliwi = new Ghost(this.ctx, true, "Blue");
+    this.oniwi = new Ghost(this.ctx, true, "Orange");
+    this.rediwi = new Ghost(this.ctx, true, "Red");
     this.level = new Level(this.ctx);
   }
 
@@ -25,6 +28,9 @@ export class Game {
     this.board.render();
     this.pacman.render();
     this.pinki.render();
+    this.bliwi.render();
+    this.oniwi.render();
+    this.rediwi.render();
     this.level.render();
     this.listeners();
     this.intervalId = setInterval(this.resetCanvas.bind(this), 10);
@@ -34,7 +40,6 @@ export class Game {
    * Start the Canvas, ti saves the canvas context
      */
   prepareDOM () {
-
     //create the canvas
     let canvas = document.createElement('canvas');
     canvas.id     = "canvas";
@@ -51,12 +56,28 @@ export class Game {
    * Reset all the canvas to do the move effect
    */
   resetCanvas(){
+    this.mobCollision();
     this.board.render();
     this.level.render();
     this.pacman.move(this.level);
     this.pacman.render();
     this.pinki.move(this.level);
     this.pinki.render();
+    this.bliwi.move(this.level);
+    this.bliwi.render();
+    this.oniwi.move(this.level);
+    this.oniwi.render();
+    this.rediwi.move(this.level);
+    this.rediwi.render();
+  }
+  /**
+   * Check if there's a collision between Pacman and the ghosts
+   */
+  mobCollision(){
+    if (this.pacman.position[0] - this.pacman.radius == this.pinki.position[0] + this.pinki.radius
+       && this.pacman.position[1] == this.pinki.position[1]){
+      alert("got you");
+    }
   }
 
   /**

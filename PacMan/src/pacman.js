@@ -1,8 +1,8 @@
 import {Mob} from './mob.js';
 
 export class Pacman extends Mob {
-  constructor(ctx, ai) {
-    super(ctx, ai);
+  constructor(ctx, ai, color) {
+    super(ctx, ai, color);
     this.ctx = ctx;
     this.radius = 10;
     this.speed = 1;
@@ -18,7 +18,7 @@ export class Pacman extends Mob {
     let headDirection = this.checkHeadDirection();
     this.ctx.beginPath();
     this.ctx.arc(this.position[0], this.position[1], this.radius, headDirection["arc1Start"], headDirection["arc1End"], false);
-    this.ctx.fillStyle = "rgb(255, 255, 0)";
+    this.ctx.fillStyle = this.color;
     this.ctx.fill();
     this.ctx.beginPath();
     this.ctx.arc(this.position[0], this.position[1], this.radius, headDirection["arc2Start"], headDirection["arc2End"], false);

@@ -16,7 +16,9 @@ export class Level {
                     [0,0,this.ctx.canvas.clientWidth,10],
                     [0,this.ctx.canvas.clientHeight - 10,this.ctx.canvas.clientWidth,10],
                     [this.ctx.canvas.clientWidth-10,0,10,this.ctx.canvas.clientHeight],
-                    [50,50,10,40],
+                    [32,32,10,40],
+                    [32,32,100,10],
+                    [130,32,10,40],
                   ];
     let walls = [];
     for (let i = 0; i < poolWalls.length; i++) {
