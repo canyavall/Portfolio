@@ -11,13 +11,11 @@ export class Game {
     this.ctx = this.prepareDOM();
     this.intervalId = 0
 
+
     //Create objects
     this.board = new Board(this.ctx);
     this.pacman = new Pacman(this.ctx, false, "Yellow");
-    this.pinki = new Ghost(this.ctx, true, "Pink");
-    this.bliwi = new Ghost(this.ctx, true, "Blue");
-    this.oniwi = new Ghost(this.ctx, true, "Orange");
-    this.rediwi = new Ghost(this.ctx, true, "Red");
+    this.ghosts = this.createGhosts(6);
     this.level = new Level(this.ctx);
   }
 
@@ -27,10 +25,9 @@ export class Game {
   play(){
     this.board.render();
     this.pacman.render();
-    this.pinki.render();
-    this.bliwi.render();
-    this.oniwi.render();
-    this.rediwi.render();
+    for (let i = 0; i < this.ghosts.length; i++) {
+      this.ghosts[i].render();
+    }
     this.level.render();
     this.listeners();
     this.intervalId = setInterval(this.resetCanvas.bind(this), 10);
@@ -61,22 +58,20 @@ export class Game {
     this.level.render();
     this.pacman.move(this.level);
     this.pacman.render();
-    this.pinki.move(this.level);
-    this.pinki.render();
-    this.bliwi.move(this.level);
-    this.bliwi.render();
-    this.oniwi.move(this.level);
-    this.oniwi.render();
-    this.rediwi.move(this.level);
-    this.rediwi.render();
+    for (let i = 0; i < this.ghosts.length; i++) {
+      this.ghosts[i].move(this.level);
+      this.ghosts[i].render();
+    }
   }
   /**
    * Check if there's a collision between Pacman and the ghosts
    */
   mobCollision(){
-    if (this.pacman.position[0] - this.pacman.radius == this.pinki.position[0] + this.pinki.radius
-       && this.pacman.position[1] == this.pinki.position[1]){
-      alert("got you");
+    for (let i = 0; i < this.ghosts.length; i++) {
+      if (this.pacman.position[0] - this.pacman.radius == this.ghosts[i].position[0] + this.ghosts[i].radius
+         && this.pacman.position[1] == this.ghosts[i].position[1]){
+        alert("got you");
+      }
     }
   }
 
@@ -114,5 +109,18 @@ export class Game {
         this.pacman.direction[1] = value;
         break;
     }
+  }
+/**
+ * [createGhosts description]
+ * @param  {[type]} num Max. 5 ghosts
+ * @return {[type]}     [description]
+ */
+  createGhosts(num){
+    let resArr = []
+    let ghostColors = ["Pink", "Red", "Blue", "Orange", "Brown", "Violet"]
+    for (let i = 0; i < num; i++) {
+      resArr.push(new Ghost(this.ctx, true, ghostColors[i]));
+    }
+    return resArr;
   }
 }
