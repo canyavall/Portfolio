@@ -12,13 +12,22 @@ export class Level {
     //them from IA
     //Now, we are using a fixed pool of walls
     let poolWalls = [
-                    [0,0,10,this.ctx.canvas.clientHeight],
-                    [0,0,this.ctx.canvas.clientWidth,10],
-                    [0,this.ctx.canvas.clientHeight - 10,this.ctx.canvas.clientWidth,10],
-                    [this.ctx.canvas.clientWidth-10,0,10,this.ctx.canvas.clientHeight],
-                    [32,32,10,40],
-                    [32,32,100,10],
-                    [130,32,10,40],
+                    [0,0,5,this.ctx.canvas.clientHeight],
+                    [0,0,this.ctx.canvas.clientWidth,5],
+                    [0,this.ctx.canvas.clientHeight - 5,this.ctx.canvas.clientWidth,10],
+                    [this.ctx.canvas.clientWidth-5,0,5,this.ctx.canvas.clientHeight],
+
+                    [27,27,30,25],
+                    [79,27,43,25],
+                    [145,0,10,52],
+                    [177,27,43,25],
+                    [242,27,30,25],
+
+                    [27,74,30,10],
+                    [79,74,10,60],
+                    [111,74,78,10],
+                    [211,74,10,60],
+                    [243,74,30,10],
                   ];
     let walls = [];
     for (let i = 0; i < poolWalls.length; i++) {
