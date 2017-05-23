@@ -7,7 +7,7 @@ export class Pacman extends Mob {
     this.speed = 1;
     // "up", "down", "left", "right" Direction to move
     this.direction = [false, false, false, false];//
-    this.position = [154,235];
+    this.position = [151,245];
   };
   /**
    * Render the pacman in the screen depending on the position of the object

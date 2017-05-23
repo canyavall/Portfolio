@@ -25,6 +25,7 @@ export class Mob {
 
     //Check Collisions
     this.wallCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius, level);
+    this.boardCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius);
     if (this.ai === true) this.newDirection();
 
     //Modify direction
@@ -34,6 +35,15 @@ export class Mob {
     if (this.direction[3] && this.go[3]) this.position[0] += this.speed;
   }
 
+  /**
+   * Check the wall collisions and sets the possible directions
+   * @param  {[type]} xPositionPlusRadius  [description]
+   * @param  {[type]} xPositionMinusRadius [description]
+   * @param  {[type]} yPositionPlusRadius  [description]
+   * @param  {[type]} yPositionMinusRadius [description]
+   * @param  {[type]} level                [description]
+   * @return {[type]}                      [description]
+   */
   wallCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius, level) {
     for (let i = 0; i < level.walls.length; i++) {
       let startX = level.walls[i].rect[0],
@@ -48,7 +58,21 @@ export class Mob {
       if (xPositionPlusRadius === startX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[3] = false; //go right
     }
   }
+  /**
+   * Check the board Collision and resends the mob to the other side
+   * @param  {[type]} xPositionPlusRadius  [description]
+   * @param  {[type]} xPositionMinusRadius [description]
+   * @param  {[type]} yPositionPlusRadius  [description]
+   * @param  {[type]} yPositionMinusRadius [description]
+   * @return {[type]}                      [description]
+   */
+  boardCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius){
+    if (xPositionPlusRadius == 0) this.position[0] = this.ctx.canvas.clientWidth;
+    if (xPositionMinusRadius == this.ctx.canvas.clientWidth) this.position[0] = 0;
+    if (yPositionPlusRadius == 0) this.position[1] = this.ctx.canvas.clientHeight;
+    if (yPositionMinusRadius == this.ctx.canvas.clientHeight) this.position[1] = 0;
 
+  }
   /**
    * If ia is true, then we move the mob randomly when he collides
    * @return {[type]} [description]

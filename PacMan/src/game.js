@@ -7,7 +7,7 @@ export class Game {
   constructor() {
     //Initiate variables
     this.width = 300;
-    this.height = 400;
+    this.height = 325;
     this.ctx = this.prepareDOM();
     this.intervalId = 0
 
