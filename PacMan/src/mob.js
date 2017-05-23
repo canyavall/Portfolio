@@ -3,7 +3,7 @@ export class Mob {
     this.ctx = ctx;
     this.ai = ai;
     this.color = color;
-    this.radius = 10;
+    this.radius = 9;
     this.speed = 1;
 
     // "up", "down", "left", "right" Direction to move
@@ -22,7 +22,7 @@ export class Mob {
     let yPositionPlusRadius = this.position[1] + this.radius + 1;
     let yPositionMinusRadius = this.position[1] - this.radius - 1;
     this.go = [true, true, true, true];
-    
+
     //Check Collisions
     this.wallCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius, level);
     if (this.ai === true) this.newDirection();

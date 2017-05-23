@@ -4,7 +4,6 @@ export class Pacman extends Mob {
   constructor(ctx, ai, color) {
     super(ctx, ai, color);
     this.ctx = ctx;
-    this.radius = 10;
     this.speed = 1;
     // "up", "down", "left", "right" Direction to move
     this.direction = [false, false, false, false];//
