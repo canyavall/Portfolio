@@ -8,7 +8,7 @@ export class Ghost extends Mob{
     this.speed = 1;
     // "up", "down", "left", "right" Direction to move
     this.direction = [false, true, false, false];
-    this.position = [100,300];
+    this.position = [150,203];
   }
   render(){
     this.ctx.fillStyle = this.color;
