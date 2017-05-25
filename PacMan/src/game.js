@@ -2,6 +2,7 @@ import {Board} from './board.js';
 import {Level} from './level.js';
 import {Pacman} from './pacman.js';
 import {Ghost} from './ghost.js';
+import {Pill} from './pill.js';
 
 export class Game {
   constructor() {
@@ -10,7 +11,6 @@ export class Game {
     this.height = 325;
     this.ctx = this.prepareDOM();
     this.intervalId = 0
-
 
     //Create objects
     this.board = new Board(this.ctx);
@@ -25,9 +25,7 @@ export class Game {
   play(){
     this.board.render();
     this.pacman.render();
-    for (let i = 0; i < this.ghosts.length; i++) {
-      this.ghosts[i].render();
-    }
+    this.ghosts.forEach((element) => element.render());
     this.level.render();
     this.listeners();
     this.intervalId = setInterval(this.resetCanvas.bind(this), 10);
@@ -67,12 +65,12 @@ export class Game {
    * Check if there's a collision between Pacman and the ghosts
    */
   mobCollision(){
-    for (let i = 0; i < this.ghosts.length; i++) {
-      if (this.pacman.position[0] - this.pacman.radius == this.ghosts[i].position[0] + this.ghosts[i].radius
-         && this.pacman.position[1] == this.ghosts[i].position[1]){
-        alert("got you");
-      }
-    }
+    // for (let i = 0; i < this.ghosts.length; i++) {
+    //   if (this.pacman.position[0] - this.pacman.radius == this.ghosts[i].position[0] + this.ghosts[i].radius
+    //      && this.pacman.position[1] == this.ghosts[i].position[1]){
+    //     alert("got you");
+    //   }
+    // }
   }
 
   /**
