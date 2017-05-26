@@ -8,7 +8,7 @@ export class Game {
   constructor() {
     //Initiate variables
     this.width = 300;
-    this.height = 325;
+    this.height = 350;
     this.ctx = this.prepareDOM();
     this.intervalId = 0
 
@@ -115,9 +115,12 @@ export class Game {
  */
   createGhosts(num){
     let resArr = []
+    let color = 0;
     let ghostColors = ["Pink", "Red", "Blue", "Orange", "Brown", "Violet"]
     for (let i = 0; i < num; i++) {
-      resArr.push(new Ghost(this.ctx, true, ghostColors[i]));
+      resArr.push(new Ghost(this.ctx, true, ghostColors[color]));
+      if ( color == ghostColors.length) color = 0;
+      color++;
     }
     return resArr;
   }
