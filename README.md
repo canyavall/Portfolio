@@ -10,7 +10,7 @@ The projects that can be found are:
 
 * Javascript
   * [Pong](https://github.com/canyavall/Portfolio/tree/master/pong)
-  * [Pacman](https://github.com/canyavall/Portfolio/tree/master/PacMan)
+  * [Pacman - Collision version (Frozen)](https://github.com/canyavall/Portfolio/tree/master/PacMan)
 
 * Java
   * [Bank](https://github.com/canyavall/Portfolio/tree/master/Bank)
