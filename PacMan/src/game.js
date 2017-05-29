@@ -32,7 +32,7 @@ export class Game {
   }
 
   /**
-   * Start the Canvas, ti saves the canvas context
+   * Start the Canvas, it saves the canvas context
      */
   prepareDOM () {
     //create the canvas
