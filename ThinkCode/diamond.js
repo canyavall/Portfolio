@@ -27,16 +27,21 @@ function diamond(num){
 
   for (let i = 1; i <= num; i++) {
     if (i <= middleNum){
-      let lat = new Array(middleNum - i + 1).join( " " ) + new Array(i).join( "*" ); // write asterisks
-      let finalString = lat + "*" + lat.split("").reverse().join("");
-      finalArray[i] = finalString;
+      let lat = " ".repeat(middleNum - i) + "*".repeat(i-1)
+      finalArray[i] = lat + "*" + lat.split("").reverse().join("");
     }else{
       finalArray[i] = finalArray[middleNum - (i - middleNum)]
     }
   }
-  finalArray.forEach(e => console.log(e));
-}
 
-diamond(3);
-diamond(5);
-diamond(15);
+  let finalString = "";
+  finalArray.forEach(e => finalString += e + '\n');
+  return finalString;
+}
+// console.time('diamond 11');
+// diamond(11);
+// console.timeEnd('diamond 11');
+
+console.log(diamond(3));
+console.log(diamond(5));
+console.log(diamond(11));
