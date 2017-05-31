@@ -22,22 +22,20 @@ function maxSequence(arrayNum){
   let sumBuffer = 0;
   for (var i = 0; i < arrayNum.length; i++){
     if (arrayNum[i] >= 0) valid = true;
-
     if (arrayNum[i] < 0 && finalArray.length == 0) continue; //ignore number if it is negative and still we don't have a final
 
     bufferArray.push(arrayNum[i]);
     sumBuffer = bufferArray.reduce((x, y) => x + y)
 
-    if (sumBuffer > sumFinal) finalArray = bufferArray;
-    if (sumBuffer < sumFinal - 2) bufferArray = [];
+    if (sumBuffer > sumFinal) finalArray = bufferArray.slice();
+    if (sumBuffer < sumFinal - 2 && arrayNum[i] < 0) bufferArray = [];
 
     sumFinal = finalArray.reduce((x, y) => x + y);
   }
-console.log(finalArray);
   if (!valid) return null;
   return sumFinal;
-
 }
 
 console.log(maxSequence([-2, 1, -3, 4, -1, 2, 1, -5, 4, -1]));// should be 6: [4, -1, 2, 1]
-//console.log(maxSequence([-2,1,-5])) // should be 1
+console.log(maxSequence([-2,1,-5])) // should be 1
+console.log(maxSequence([4,1,-4,2,-5,1,1,2,3,-1,2])) // should be 8
