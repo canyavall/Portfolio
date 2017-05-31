@@ -18,32 +18,24 @@ function maxSequence(arrayNum){
   let valid = false;
   let finalArray = [];
   let bufferArray = [];
-  let sumNumber = 0;
+  let sumFinal = 0;
+  let sumBuffer = 0;
   for (var i = 0; i < arrayNum.length; i++){
     if (arrayNum[i] >= 0) valid = true;
 
-    if (arrayNum[i] < 0 && finalArray.length == 0) continue; //ignore first number if it is negative
-    if (arrayNum[i] > sumNumber) {// If the number given is bigger than final
-      finalArray = [arrayNum[i]];
-      continue;
-    }
+    if (arrayNum[i] < 0 && finalArray.length == 0) continue; //ignore number if it is negative and still we don't have a final
 
-    if (arrayNum[i] > 0 & bufferArray.length == 0) finalArray.push(arrayNum[i]); //If it is possitve and we are not calculating the buffer
+    bufferArray.push(arrayNum[i]);
+    sumBuffer = bufferArray.reduce((x, y) => x + y)
 
+    if (sumBuffer > sumFinal) finalArray = bufferArray;
+    if (sumBuffer < sumFinal - 2) bufferArray = [];
 
-    if(arrayNum[i] < 0 ){
-      if (bufferArray.length == 0)  bufferArray = finalArray;
-
-    }
-
-
-
-
-    sumNumber = finalArray.reduce((x, y) => x + y)
+    sumFinal = finalArray.reduce((x, y) => x + y);
   }
 console.log(finalArray);
   if (!valid) return null;
-  return sumNumber;
+  return sumFinal;
 
 }
 

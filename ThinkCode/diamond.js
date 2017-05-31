@@ -45,3 +45,4 @@ function diamond(num){
 console.log(diamond(3));
 console.log(diamond(5));
 console.log(diamond(11));
+console.log(diamond(151));
