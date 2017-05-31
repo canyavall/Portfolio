@@ -9,5 +9,6 @@ The code written in each of this exercises are homemade, none was copied or any 
 * JavaScript
   * Diagonal_sum: Given a matrix we want to know the difference between the sum of 2 diagonals numbers. Ex: Given the array [7,-12,6,-3,8,1,23,-16,4] the result would be 18
   * Diamond: Given a number, we have to return a string that displays a diamond shape on the screen using asterisk characters
+  * maxSumArray: Finds the maximum sum of a contiguous subsequence in an array or list of integers
 
 * Java
