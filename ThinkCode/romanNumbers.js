@@ -8,9 +8,10 @@
 // Extra credit: write a second function that takes
 // a number as input and returns its roman numeral.
 
+
+let nums = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1};
 function getNumeral(str){
   let arrayNum = str.split(""),
-      nums = {"M": 1000, "D": 500, "C": 100, "L": 50, "X": 10, "V": 5, "I": 1},
       finalNum = 0,
       prev = 0,
       rest = 0;
@@ -29,16 +30,37 @@ function getNumeral(str){
     return finalNum
 }
 
-// console.log(getNumeral("VI")); //6
-// console.log(getNumeral("IX")); //9
-// console.log(getNumeral("XXVIII")); //28
-// console.log(getNumeral("CXLII")); //142
-// console.log(getNumeral("CCCXLIX"));//349
-// console.log(getNumeral("DCCCLXXVIII"));//878
-// console.log(getNumeral("MCDXXXIX"));//1439
-// console.log(getNumeral("MMDCCCXCIV"));//2894
-// console.log(getNumeral("MMCMXC"));//2990
-
-console.time('getNumeral');
+console.log(getNumeral("VI")); //6
+console.log(getNumeral("IX")); //9
+console.log(getNumeral("XXVIII")); //28
+console.log(getNumeral("CXLII")); //142
+console.log(getNumeral("CCCXLIX"));//349
+console.log(getNumeral("DCCCLXXVIII"));//878
+console.log(getNumeral("MCDXXXIX"));//1439
 console.log(getNumeral("MMDCCCXCIV"));//2894
-console.timeEnd('getNumeral');
+console.log(getNumeral("MMCMXC"));//2990
+
+let rom = ["M", "D", "C", "L", "X", "V", "I"];
+
+function getRoman (num){
+  let numSize = num.toString().length;
+  let arrayNum = "0".repeat(4 - numSize) + num;
+  let finalString = "";
+  let control = 0;
+  for (let i = 0; i < arrayNum.length; i++) {
+    if (arrayNum[i] > 0 && arrayNum[i] < 4) finalString += rom[control].repeat(arrayNum[i]);
+    if (arrayNum[i] == 4) finalString += rom[control] + rom[control - 1];
+    if (arrayNum[i] == 5) finalString += rom[control - 1];
+    if (arrayNum[i] > 6 && arrayNum[i] < 9) finalString += rom[control-1] + rom[control].repeat(arrayNum[i]-5);
+    if (arrayNum[i] == 9) finalString += rom[control] + rom[control - 2];
+    control +=2;
+  }
+  return finalString;
+}
+
+console.log(getRoman(5)); //V
+console.log(getRoman(11)); //XI
+console.log(getRoman(142)); //CXLII
+console.log(getRoman(1422)); //MCDXXII
+console.log(getRoman(2304)); //MMCCCIV
+console.log(getRoman(2894));//MMDCCCXCIV
