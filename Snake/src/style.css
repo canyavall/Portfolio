@@ -1,0 +1,27 @@
+.wrapper{
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.cell{
+  width: 7px;
+  height: 7px;
+}
+
+.selected{
+  background-color: black;
+}
+
+.head {
+    background-color: blue;
+}
+
+.cherry {
+  background-color: red;
+}
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
