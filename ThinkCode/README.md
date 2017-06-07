@@ -13,5 +13,6 @@ The code written in each of this exercises are homemade, none was copied or any 
   * repatedWords: Function that given a string returns an array containing the most frequent word in it.
   * romanNumbers: Function that takes a roman numeral as input, and returns the same number in Hindu-Arabic form and the other way.
   * decodeColor: Function that given one string normalizes to a color and the other way.
+  * duplicateEncode: Return char depending on if a char from an string is repeated or not.
 
 * Java
