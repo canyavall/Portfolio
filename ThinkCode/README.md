@@ -16,6 +16,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * duplicateEncode: Return char depending on if a char from an string is repeated or not.
 
 * Java
+  * findMissingLetter: Finds a missing char in one string
 
 * PHP
   * ReverseRotate:The input is a string str of digits. Cut the string into chunks of size "x". If a chunk represents an integer such as the sum of the cubes of its digits is divisible by 2, reverse that chunk; otherwise rotate it to the left by one position. Put together these modified chunks and return the result as a string.
