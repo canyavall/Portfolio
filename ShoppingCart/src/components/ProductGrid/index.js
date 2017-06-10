@@ -10,7 +10,7 @@ const styles = {
     justifyContent: 'space-around',
   },
   gridList: {
-    height: 450,
+    height: 620,
     overflowY: 'auto',
   },
 };
@@ -18,7 +18,7 @@ const styles = {
 const ProductGrid = (props) => (
   <div style={styles.root}>
     <GridList
-      cellHeight={180}
+      cellHeight={300}
       style={styles.gridList}
       cols={3}
     >

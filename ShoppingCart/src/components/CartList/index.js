@@ -9,21 +9,24 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import "./index.css";
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui/svg-icons/action/delete';
 
 
 const CartList = (props) => {
   return <Table fixedFooter = {true}>
-    <TableHeader>
+    <TableHeader displaySelectAll= {false} adjustForCheckbox = {false}>
       <TableRow>
         <TableHeaderColumn>Name</TableHeaderColumn>
         <TableHeaderColumn>Quantity</TableHeaderColumn>
         <TableHeaderColumn>Price</TableHeaderColumn>
         <TableHeaderColumn>Discount</TableHeaderColumn>
         <TableHeaderColumn>Finalprice</TableHeaderColumn>
+        <TableHeaderColumn>Delete</TableHeaderColumn>
       </TableRow>
     </TableHeader>
 
-    <TableBody>
+    <TableBody  displayRowCheckbox= {false}>
       {props.products.map( (product, index) => {
           if (props.cartList[product.id]){
             return <TableRow key={index} rowNumber = {product.id}>
@@ -32,6 +35,7 @@ const CartList = (props) => {
               <TableRowColumn>{product.price}</TableRowColumn>
               <TableRowColumn></TableRowColumn>
               <TableRowColumn>{product.price * props.cartList[product.id]}</TableRowColumn>
+              <TableHeaderColumn><IconButton><DeleteIcon color="black" onClick = {()=>props.deleteFromCart(product.id)}/></IconButton></TableHeaderColumn>
             </TableRow>;
           }
         return '';

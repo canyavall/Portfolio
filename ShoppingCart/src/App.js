@@ -42,6 +42,20 @@ export default class App extends Component {
     this.setState({cart, totalCart});
   }
 
+  deleteFromCart = (id) => {
+    let cart = {...this.state.cart };
+    let totalCart = this.state.totalCart;
+    if (cart[id] ){
+      cart[id]--;
+    }else{
+      delete cart[id];
+    }
+    for (var i = 0; i < this.state.products.length; i++)
+      if (this.state.products[i].id === id) totalCart -= this.state.products[i].price;
+
+    this.setState({cart, totalCart});
+  }
+
   render() {
     return (
       <div className="App">
@@ -51,7 +65,7 @@ export default class App extends Component {
             <ProductGrid products = {this.state.products} addToCart = {this.addToCart}/>
           </div>
           <div className="table">
-            <CartList products = {this.state.products} cartList = {this.state.cart} totalCart = {this.state.totalCart}/>
+            <CartList products = {this.state.products} cartList = {this.state.cart} totalCart = {this.state.totalCart} deleteFromCart={this.deleteFromCart}/>
           </div>
         </div>
       </div>
