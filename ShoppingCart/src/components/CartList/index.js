@@ -27,18 +27,17 @@ const CartList = (props) => {
     </TableHeader>
 
     <TableBody  displayRowCheckbox= {false}>
-      {props.products.map( (product, index) => {
-          if (props.cartList[product.id]){
-            return <TableRow key={index} rowNumber = {product.id}>
-              <TableRowColumn>{product.title}</TableRowColumn>
-              <TableRowColumn>{props.cartList[product.id]}</TableRowColumn>
-              <TableRowColumn>{product.price}</TableRowColumn>
-              <TableRowColumn></TableRowColumn>
-              <TableRowColumn>{product.price * props.cartList[product.id]}</TableRowColumn>
-              <TableHeaderColumn><IconButton><DeleteIcon color="black" onClick = {()=>props.deleteFromCart(product.id)}/></IconButton></TableHeaderColumn>
-            </TableRow>;
-          }
-        return '';
+
+      {Object.keys(props.cartList).map((idProduct, index) => {
+          console.log(idProduct);
+          return <TableRow key={index} rowNumber = {parseInt(idProduct,0)}>
+            <TableRowColumn>{props.products[idProduct].title}</TableRowColumn>
+            <TableRowColumn>{props.cartList[idProduct]}</TableRowColumn>
+            <TableRowColumn>{props.products[idProduct].price}</TableRowColumn>
+            <TableRowColumn></TableRowColumn>
+            <TableRowColumn>{props.products[idProduct].price * props.cartList[idProduct]}</TableRowColumn>
+            <TableHeaderColumn><IconButton><DeleteIcon color="black" onClick = {()=>props.deleteFromCart(idProduct)}/></IconButton></TableHeaderColumn>
+          </TableRow>;
       })};
     </TableBody>
     <TableFooter>

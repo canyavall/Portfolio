@@ -14,17 +14,21 @@ export default class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      products: [
-        { id: 1, img: tshirt1, title: 'White Basic', price: 10 },
-        { id: 2, img: tshirt2, title: 'Unicorn power', price: 20 },
-        { id: 3, img: tshirt3, title: 'Superman', price: 20 },
-        { id: 4, img: tshirt4, title: 'Spring flower', price: 15 },
-        { id: 5, img: tshirt5, title: 'Wave zen', price: 25 },
-        { id: 6, img: tshirt6, title: 'Cartoon jedy', price: 35 },
-      ],
-
+      products: {
+         1: {img: tshirt1, title: 'White Basic', price: 10, discount: 1},
+         2: {img: tshirt2, title: 'Unicorn power', price: 20, discount: 0 },
+         3: {img: tshirt3, title: 'Superman', price: 20, discount: 3 },
+         4: {img: tshirt4, title: 'Spring flower', price: 15, discount: 3 },
+         5: {img: tshirt5, title: 'Wave zen', price: 25, discount: 2 },
+         6: {img: tshirt6, title: 'Cartoon jedy', price: 35, discount: 0 },
+      },
       cart: {},
       totalCart: 0,
+      discount: {0: ["", 0],
+                 1: [" (10% Discount)", 0.1],
+                 2: [" (20% Discount)", 0.2],
+                 3: [" (30% Discount)", 0.3]
+              }
     }
   }
 
@@ -45,7 +49,7 @@ export default class App extends Component {
   deleteFromCart = (id) => {
     let cart = {...this.state.cart };
     let totalCart = this.state.totalCart;
-    if (cart[id] ){
+    if (cart[id] !== 1){
       cart[id]--;
     }else{
       delete cart[id];
@@ -62,10 +66,10 @@ export default class App extends Component {
         <Header />
         <div className = "wrapper">
           <div className="list">
-            <ProductGrid products = {this.state.products} addToCart = {this.addToCart}/>
+            <ProductGrid products = {this.state.products} addToCart = {this.addToCart} discountList = {this.state.discount}/>
           </div>
           <div className="table">
-            <CartList products = {this.state.products} cartList = {this.state.cart} totalCart = {this.state.totalCart} deleteFromCart={this.deleteFromCart}/>
+            <CartList products = {this.state.products} cartList = {this.state.cart} totalCart = {this.state.totalCart} deleteFromCart={this.deleteFromCart} discountList = {this.state.discount}/>
           </div>
         </div>
       </div>
