@@ -25,9 +25,9 @@ export default class App extends Component {
       cart: {},
       totalCart: 0,
       discount: {0: ["", 0],
-                 1: [" (10% Discount)", 0.1],
-                 2: [" (20% Discount)", 0.2],
-                 3: [" (30% Discount)", 0.3]
+                 1: [" 10%", 0.1],
+                 2: [" 20%", 0.2],
+                 3: [" 30%", 0.3]
               }
     }
   }

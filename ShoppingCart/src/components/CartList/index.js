@@ -29,13 +29,14 @@ const CartList = (props) => {
     <TableBody  displayRowCheckbox= {false}>
 
       {Object.keys(props.cartList).map((idProduct, index) => {
-          console.log(idProduct);
+          let discountText = (props.products[idProduct].discount !== 0) ? props.discountList[idProduct][0] : "";
+          let discountValue = (props.products[idProduct].discount !== 0) ? props.discountList[idProduct][1] : 0;
           return <TableRow key={index} rowNumber = {parseInt(idProduct,0)}>
             <TableRowColumn>{props.products[idProduct].title}</TableRowColumn>
             <TableRowColumn>{props.cartList[idProduct]}</TableRowColumn>
             <TableRowColumn>{props.products[idProduct].price}</TableRowColumn>
-            <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{props.products[idProduct].price * props.cartList[idProduct]}</TableRowColumn>
+            <TableRowColumn>{discountText}</TableRowColumn>
+            <TableRowColumn>{props.products[idProduct].price * props.cartList[idProduct] - (props.products[idProduct].price * props.cartList[idProduct] * discountValue)}</TableRowColumn>
             <TableHeaderColumn><IconButton><DeleteIcon color="black" onClick = {()=>props.deleteFromCart(idProduct)}/></IconButton></TableHeaderColumn>
           </TableRow>;
       })};

@@ -23,9 +23,10 @@ const ProductGrid = (props) => (
       cols={3}
     >
       {Object.keys(props.products).map((keyProduct) => {
+        let discountText = (props.products[keyProduct].discount === 0) ? "" : "(" + props.discountList[props.products[keyProduct].discount][0] + " discount)";
         return <GridTile
           key={props.products[keyProduct].img}
-          title= {<span>{props.products[keyProduct].title} {props.discountList[props.products[keyProduct].discount][0]}</span>}
+          title= {<span>{props.products[keyProduct].title} {discountText}</span>}
           subtitle={<span>Price: <b>{props.products[keyProduct].price} $</b></span>}
           actionIcon={<IconButton><ShoppingCart color="black" onClick = {()=>props.addToCart(keyProduct)}/></IconButton>}
         >
