@@ -4,14 +4,20 @@
  * @param  {[url]} url    [url for the fetch]
  * @return {[int]}        [Returns the error code]
  */
-export const defaultFecthGet = (action, url, method) => (dispatch, getState) => {
+export const defaultFecthGet = (action, url, method, body) => (dispatch, getState) => {
+
   const token = getState().currentuser.token;
-  const config = {
+  let config = {
     method: method,
     headers: {
       Authorization: `Bearer ${token}`
     }
   };
+
+  if (body){
+    config.body = JSON.stringify(body);
+    config.headers['Content-type'] = 'application/json';
+  }
 
   return fetch(url, config)
     .then(res => {

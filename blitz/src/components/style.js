@@ -15,3 +15,20 @@ export const paperStyle = {
   textAlign: 'center',
   display: 'inline-block',
 };
+
+export const blitzStyle = {
+  title: {
+    textAlign: 'left',
+    height: '45px',
+    fontWeight: 'bold'
+  },
+  time: {
+    fontSize: "20%"
+  },
+  action: {
+    fontSize: "30%",
+  },
+  div: {
+    marginTop: "10px"
+  }
+}

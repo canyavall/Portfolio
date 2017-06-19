@@ -30,25 +30,6 @@ export const getFeedList = () => {
   return defaultFecthGet(getFeed,"https://propulsion-blitz.herokuapp.com/api/feed", "GET") ;
 }
 
-export const AddUserBlitz = (content) => (dispatch, getState) => {
-  const token = getState().currentuser.token;
-  const config = {
-    method: 'POST',
-    headers: { 'Content-type': 'application/json',
-               'Authorization': `Bearer ${token}`,
-             },
-    body: JSON.stringify(content)
-  };
-
-  return fetch("https://propulsion-blitz.herokuapp.com/api/blitzs", config)
-    .then(res => {
-      if (res.status === 200) return res.json();
-        return res.status;
-    })
-    .then(blitz => {
-      if (blitz !== false) dispatch(addUserBlitzToBLitzs(blitz));
-    })
-    .catch(err => {
-          console.log('error: ', err);
-      });
+export const AddUserBlitz = (content) => {
+  return defaultFecthGet(addUserBlitzToBLitzs,"https://propulsion-blitz.herokuapp.com/api/blitzs", "POST", content);
 }
