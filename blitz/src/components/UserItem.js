@@ -2,20 +2,8 @@ import React from 'react';
 import {Card, CardText, CardHeader} from 'material-ui/Card';
 import { Link } from 'react-router-dom';
 import Blitz from '../components/Blitz';
+import { userItemStyle } from './style';
 
-const style = {
-  title: {
-    textAlign: 'left',
-    height: '75px'
-  },
-  subtitle: {
-    textAlign: 'center',
-    fontSize: "25%"
-  },
-  div: {
-    marginTop: "10px"
-  }
-}
 /**
  * Print the user
  * Props:
@@ -28,6 +16,7 @@ const UserItem = (props) => {
   //prepare data
   const data = props.data;
   const linkTo = "users/" + data._id;
+  //const favorite = (props.isFavorit) ? <Like style={ isLiked } onClick={() => props.like(props.data._id)}/> : "";
   const title = (props.showLink) ? (<Link to={ linkTo }>{ data.username }</Link>) : (<div>{ data.username }</div>)
   const Blitzs = (props.blitzs) ? <CardText> {props.blitzs.map((blitz, index) => <Blitz key={index}
                                                                                         data={blitz}
@@ -37,16 +26,14 @@ const UserItem = (props) => {
                                                                                         />)}  </CardText>  : "";
 
   // print data
-  return <div style={style.div}>
+  return <div style={userItemStyle.div}>
           <Card expanded={false}>
             <CardHeader
               title={ title }
               avatar={ data.avatar }
-              actAsExpander={ false }
-              showExpandableButton={ false }
               subtitle={ data.email }
-              style={ style.title }
-              subtitleStyle={ style.subtitle }
+              style={ userItemStyle.title }
+              subtitleStyle={ userItemStyle.subtitle }
             />
               { Blitzs }
             </Card>

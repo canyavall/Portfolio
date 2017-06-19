@@ -22,11 +22,19 @@ export const blitzStyle = {
     height: '45px',
     fontWeight: 'bold'
   },
-  time: {
+  subtitle: {
     fontSize: "20%"
   },
-  action: {
-    fontSize: "30%",
+  div: {
+    marginTop: "10px"
+  }
+}
+
+export const userItemStyle = {
+  title: {
+    textAlign: 'left',
+    height: '45px',
+    fontWeight: 'bold'
   },
   div: {
     marginTop: "10px"

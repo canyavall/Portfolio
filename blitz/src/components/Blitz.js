@@ -17,30 +17,25 @@ const Blitz = (props) => {
   const titleToLink =  "users/" + props.data._user._id;
   const titleFull = (<Link to={ titleToLink }>{ props.data._user.username }</Link>);
 
-  let isLiked = { width: "32%", position:"absolute"};
+  let isLiked = { marginTop: "15px", marginRight: "20px", float: "right", cursor: "pointer", zIndex: 100, position: "relative"};
   if (props.data.isLiked) isLiked['color'] = '#ff9900';
 
   const likeIcon = (props.isFollowed) ? <Like style={ isLiked } onClick={() => props.like(props.data._id)}/> : "";
 
   const cardHeaderFull = (<CardHeader
             title={ titleFull }
-            actAsExpander={ false }
-            showExpandableButton={ false }
             subtitle={ time }
             avatar={ props.data._user.avatar }
             style={ blitzStyle.title }
-            subtitleStyle={ blitzStyle.time }
+            subtitleStyle={ blitzStyle.subtitle }
           /> );
 
   const cardHeaderSimple = (<CardHeader
             title={ time }
-            actAsExpander={ false }
-            showExpandableButton={ false }
             style={ blitzStyle.title }
           />);
 
   const cardHeader =  (props.showFullHeader) ? cardHeaderFull : cardHeaderSimple;
-
 
   //Print
   return  <div style={blitzStyle.div}>

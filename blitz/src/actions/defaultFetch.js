@@ -5,7 +5,6 @@
  * @return {[int]}        [Returns the error code]
  */
 export const defaultFecthGet = (action, url, method, body) => (dispatch, getState) => {
-
   const token = getState().currentuser.token;
   let config = {
     method: method,
