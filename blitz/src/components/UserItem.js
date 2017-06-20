@@ -3,6 +3,7 @@ import {Card, CardText, CardHeader} from 'material-ui/Card';
 import { Link } from 'react-router-dom';
 import Blitz from '../components/Blitz';
 import { userItemStyle } from './style';
+import Follow from 'material-ui/svg-icons/action/grade';
 
 /**
  * Print the user
@@ -12,7 +13,7 @@ import { userItemStyle } from './style';
  * *showLink: Shows the link into the titles if it is true
  */
 const UserItem = (props) => {
-
+  console.log(props);
   //prepare data
   const data = props.data;
   const linkTo = "users/" + data._id;
@@ -25,6 +26,10 @@ const UserItem = (props) => {
                                                                                         isFollowed = {props.isFollowed}
                                                                                         />)}  </CardText>  : "";
 
+
+  let isFollowedIcon = { marginTop: "15px", marginRight: "20px", float: "right", cursor: "pointer", zIndex: 100, position: "relative"};
+  if (props.isFollowed) isFollowedIcon['color'] = '#ff9900';
+  const isFollowed = (props.isFollowed) ? <Follow style={ isFollowedIcon } onClick={() => console.log("click")}/> : "";
   // print data
   return <div style={userItemStyle.div}>
           <Card expanded={false}>
@@ -35,6 +40,7 @@ const UserItem = (props) => {
               style={ userItemStyle.title }
               subtitleStyle={ userItemStyle.subtitle }
             />
+              { isFollowed }
               { Blitzs }
             </Card>
           </div>

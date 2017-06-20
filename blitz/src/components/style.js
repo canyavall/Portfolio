@@ -33,7 +33,7 @@ export const blitzStyle = {
 export const userItemStyle = {
   title: {
     textAlign: 'left',
-    height: '45px',
+    height: '75px',
     fontWeight: 'bold'
   },
   div: {
