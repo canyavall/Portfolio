@@ -19,6 +19,7 @@ class Feed extends React.Component {
   }
 
   render () {
+    console.log(this.props);
     if ( Object.keys(this.props.feed).length === 0 ) return <Loader />;
       return (
           <div>

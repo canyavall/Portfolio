@@ -8,3 +8,9 @@ node_modules
 *.log
 .gradle
 build
+Servers
+runDemoExercise
+RemoteSystemsTempFiles
+gradlew
+gradlew.bat
+gradle
