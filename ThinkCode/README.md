@@ -14,6 +14,9 @@ The code written in each of this exercises are homemade, none was copied or any 
   * romanNumbers: Function that takes a roman numeral as input, and returns the same number in Hindu-Arabic form and the other way.
   * decodeColor: Function that given one string normalizes to a color and the other way.
   * duplicateEncode: Return char depending on if a char from an string is repeated or not.
+  * humanReadable: Parse seconds to hours:minutes:seconds
+  * simplePigLatin: Change one string by rules
+  * sortTheOdd: Given an array of numbers, sort the odd but not the even
 
 * Java
   * findLetter: Finds a missing char in one string
