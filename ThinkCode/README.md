@@ -17,6 +17,9 @@ The code written in each of this exercises are homemade, none was copied or any 
   * humanReadable: Parse seconds to hours:minutes:seconds
   * simplePigLatin: Change one string by rules
   * sortTheOdd: Given an array of numbers, sort the odd but not the even
+  * doneOrNot: Checks if a sudoke is already finished or not
+  * dirReduc: Reduce an array of directions depending on the direction
+  * rangeExtraction: Given an array of ordered ints, check if there are a range in and set it
 
 * Java
   * findLetter: Finds a missing char in one string
