@@ -1,23 +1,31 @@
 function doneOrNot(board){
-  let finish = true;
-  //Check lines
-  board.forEach((el)=> { if (el.reduce((a,b) => a+b) !== 45) finish = false;});
+  var merged = [].concat.apply([], board);
+  let sqIni = 0;
 
-  //Check columns
   for (let i = 0; i < 9; i++) {
-    let col = 0;
-    for (var u = 0; u < 9; u++) {
-      col += board[u][i];
-    }
-    if (col !== 45) finish = false;
+    let u = i*9;
+
+    //Check rows
+    if (merged.slice(u,u+9).reduce((a,b) => a+b) !== 45) return "Try again!";
+
+    //Check columns
+    if(merged.filter((n,t)=> (t-i)%9 === 0).reduce((a,b) => a+b) !== 45) return "Try again!";
+    //This piece of code is better for performance
+    //if ((merged[i] + merged[i+9] + merged[i+18] + merged[i+27] + merged[i+36] + merged[i+45] + merged[i+54]+ merged[i+63]+ merged[i+72])!== 45)finish = false;
+
+    //Blocks
+    if(merged.slice(sqIni,sqIni+3).reduce((a,b) => a+b) +
+       merged.slice(sqIni+9,sqIni+12).reduce((a,b) => a+b) +
+       merged.slice(sqIni+18,sqIni+21).reduce((a,b) => a+b) !== 45 )
+          return "Try again!";
+
+    //Calculate initial
+    sqIni = (i === 2 || i === 5) ? sqIni+21 : sqIni+3;
+
   }
 
-  //Check zones
-  for (var i = 0; i < 9; i++) {
-      //0+1+2+10+11+12+18+19+20
-  }
   //Return
-  return (finish) ? "Finished!" : "Try again!";
+  return "Finished!";
 }
 
 console.log(doneOrNot([ [5, 3, 4, 6, 7, 8, 9, 1, 2],
