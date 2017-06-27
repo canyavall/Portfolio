@@ -20,6 +20,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * doneOrNot: Checks if a sudoke is already finished or not
   * dirReduc: Reduce an array of directions depending on the direction
   * rangeExtraction: Given an array of ordered ints, check if there are a range in and set it
+  * secretString: Find a secret string inside an array of arrays
 
 * Java
   * findLetter: Finds a missing char in one string
