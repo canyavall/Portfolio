@@ -15,7 +15,6 @@ var recoverSecret = function(triplets) {
           word.splice(word.indexOf(triplets[i][u]),1);
           word.splice(word.indexOf(triplets[i][u+2]), 0, triplets[i][u]);
         }
-
         if (word.indexOf(triplets[i][u]) > word.indexOf(triplets[i][u+1])){
           word.splice(word.indexOf(triplets[i][u]),1);
           word.splice(word.indexOf(triplets[i][u+1]), 0, triplets[i][u]);
@@ -28,7 +27,6 @@ var recoverSecret = function(triplets) {
           word.splice(word.indexOf(triplets[i][u]),1);
           word.splice(word.indexOf(triplets[i][u]), 0, letter);
         }
-
         if (word.indexOf(triplets[i][u-1]) > word.indexOf(triplets[i][u])){
           let letter = triplets[i][u-1];
           word.splice(word.indexOf(triplets[i][u-1]),1);
