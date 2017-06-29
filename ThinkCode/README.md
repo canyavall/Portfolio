@@ -21,6 +21,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * dirReduc: Reduce an array of directions depending on the direction
   * rangeExtraction: Given an array of ordered ints, check if there are a range in and set it
   * secretString: Find a secret string inside an array of arrays
+  * shortestTime: Shortest time a person needs to go from a floor n to the first floor
 
 * Java
   * findLetter: Finds a missing char in one string
