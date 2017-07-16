@@ -14,7 +14,6 @@ function highestWordCount (str) {
 	if (str.legth == 0) return [];
 	if (typeof str != 'string') return "Error";
 	let arrayStr = str.replace(/[^A-Za-z ]/g, '').split(" ");
-
 	let objectStr = {};
 	let max = 0;
 	for (var i = 0; i < arrayStr.length; i++) {
@@ -32,12 +31,8 @@ function highestWordCount (str) {
 return finalArray;
 }
 
-console.time('someFunction');
-
-highestWordCount("oh yes, no wait... yes!"); //yes
-
-console.timeEnd('someFunction');
-// console.log(highestWordCount("oh yes, no wait... yes!")); //yes
-// console.log(highestWordCount("I See, mmm... I see, 2 and 2.")); //['I', 'see']
-// console.log(highestWordCount("")); //[]
-// console.log(highestWordCount(["asd"])); // Error
+console.log(highestWordCount("oh yes, no wait... yes!")); //yes
+console.log(highestWordCount("oh yes, no wait... yes!")); //yes
+console.log(highestWordCount("I See, mmm... I see, 2 and 2.")); //['I', 'see']
+console.log(highestWordCount("")); //[]
+console.log(highestWordCount(["asd"])); // Error

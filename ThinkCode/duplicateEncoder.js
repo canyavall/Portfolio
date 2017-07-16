@@ -1,9 +1,7 @@
 function duplicateEncode(word){
     let wordArray = word.toLowerCase().split("");
     let restString = "";
-    for (let i = 0; i < wordArray.length; i++){
-      restString += (wordArray.indexOf(wordArray[i]) == wordArray.lastIndexOf(wordArray[i])) ? "(" : ")";
-    }
+    wordArray.forEach((e) => restString += (wordArray.indexOf(e) == wordArray.lastIndexOf(e)) ? "(" : ")")
     return restString;
 }
 

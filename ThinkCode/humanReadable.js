@@ -4,7 +4,7 @@
 // MM = minutes, padded to 2 digits, range: 00 - 59
 // SS = seconds, padded to 2 digits, range: 00 - 59
 // The maximum time never exceeds 359999 (99:59:59)
-// function humanReadable(seconds) {
+function humanReadable(seconds) {
   let hours = ("0" + Math.floor(seconds/60/60)).slice (-2);
   seconds -= hours*60*60;
   let minutes = ("0" + Math.floor(seconds/60)).slice (-2);

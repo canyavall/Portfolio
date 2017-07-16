@@ -13,7 +13,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * repatedWords: Function that given a string returns an array containing the most frequent word in it.
   * romanNumbers: Function that takes a roman numeral as input, and returns the same number in Hindu-Arabic form and the other way.
   * decodeColor: Function that given one string normalizes to a color and the other way.
-  * duplicateEncode: Return char depending on if a char from an string is repeated or not.
+  * duplicateEncoder: Return char depending on if a char from an string is repeated or not.
   * humanReadable: Parse seconds to hours:minutes:seconds
   * simplePigLatin: Change one string by rules
   * sortTheOdd: Given an array of numbers, sort the odd but not the even
@@ -22,6 +22,10 @@ The code written in each of this exercises are homemade, none was copied or any 
   * rangeExtraction: Given an array of ordered ints, check if there are a range in and set it
   * secretString: Find a secret string inside an array of arrays
   * shortestTime: Shortest time a person needs to go from a floor n to the first floor
+  * openOrSenior: Check if a user is open or senior
+  * sumStrings: Given the string representations of two integers, return the string representation of the sum of those integers.
+  * supermarketQueue: There is a queue for the self-checkout tills at the supermarket. Calculate the total time required for all the customers to check out!
+  * tripleDouble: Takes in numbers num1 and num2 and returns 1 if there is a straight triple of a number at any place in num1 and also a straight double of the same number in num2
 
 * Java
   * findLetter: Finds a missing char in one string

@@ -20,10 +20,10 @@ function sumStrings(a,b) {
   return (rest) ? "1" + final : final;
 }
 
-// console.log(sumStrings('123','456')); //,'579'
-// console.log(sumStrings('8797', '45')); //8842
-// console.log(sumStrings('800', '9567')); //10367
-// console.log(sumStrings('99', '1')); //100
+console.log(sumStrings('123','456')); //,'579'
+console.log(sumStrings('8797', '45')); //8842
+console.log(sumStrings('800', '9567')); //10367
+console.log(sumStrings('99', '1')); //100
 console.log(sumStrings('00103', '08567')); //8670
 console.log(sumStrings('712569312664357328695151392', '8100824045303269669937')); //712577413488402631964821329
 console.log(sumStrings('', '5'));//5

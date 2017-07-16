@@ -20,7 +20,6 @@ function tripledouble (num1, num2){
     })
     previous = e;
   })
-
   return final;
 }
 
