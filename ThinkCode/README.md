@@ -26,6 +26,8 @@ The code written in each of this exercises are homemade, none was copied or any 
   * sumStrings: Given the string representations of two integers, return the string representation of the sum of those integers.
   * supermarketQueue: There is a queue for the self-checkout tills at the supermarket. Calculate the total time required for all the customers to check out!
   * tripleDouble: Takes in numbers num1 and num2 and returns 1 if there is a straight triple of a number at any place in num1 and also a straight double of the same number in num2
+  * longestCommon: earch the longest consequtive subsequence
+  * Automaton: read from an array and check the positions and final value
 
 * Java
   * findLetter: Finds a missing char in one string
