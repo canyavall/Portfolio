@@ -30,6 +30,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * Automaton: read from an array and check the positions and final value
   * mix: Given 2 string, find the subsequence of each and return where are they found
   * flatAndSort: Given 1 bidimensional Array, return a sorted array of them
+  / filterLucky: filter if a number in an array of numbers has the number 7 inside
 
 * Java
   * findLetter: Finds a missing char in one string
