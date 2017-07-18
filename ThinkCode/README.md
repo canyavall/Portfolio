@@ -28,6 +28,8 @@ The code written in each of this exercises are homemade, none was copied or any 
   * tripleDouble: Takes in numbers num1 and num2 and returns 1 if there is a straight triple of a number at any place in num1 and also a straight double of the same number in num2
   * longestCommon: earch the longest consequtive subsequence
   * Automaton: read from an array and check the positions and final value
+  * mix: Given 2 string, find the subsequence of each and return where are they found
+  * flatAndSort: Given 1 bidimensional Array, return a sorted array of them
 
 * Java
   * findLetter: Finds a missing char in one string
