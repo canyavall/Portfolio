@@ -34,6 +34,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * maxPOssibleScore: Check max score from an object and an array
   * snailSort: Given an n x n array, return the array elements arranged from outermost elements to the middle element, traveling clockwise.
   * alternateLetter: Create a function that accepts a string as an argument and validates whether the vowels (a, e, i, o, u) and consonants are in alternate order.
+  * countOnes: Count all set bits between a range of numbers
 
 * Java
   * findLetter: Finds a missing char in one string
