@@ -36,6 +36,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * alternateLetter: Create a function that accepts a string as an argument and validates whether the vowels (a, e, i, o, u) and consonants are in alternate order.
   * countOnes: Count all set bits between a range of numbers
   * rot13: Cypher in rot13
+  * battleShips: Like the game
 
 * Java
   * findLetter: Finds a missing char in one string
