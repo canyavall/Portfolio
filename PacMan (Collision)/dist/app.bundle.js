@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -76,115 +76,223 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Mob = exports.Mob = function () {
+  function Mob(ctx, ai, color) {
+    _classCallCheck(this, Mob);
+
+    this.ctx = ctx;
+    this.ai = ai;
+    this.color = color;
+    this.radius = 9;
+    this.speed = 1;
+
+    // "up", "down", "left", "right" Direction to move
+    this.direction = [false, true, false, false];
+    this.go = [true, true, true, true];
+    this.position = [100, 300];
+  }
+
+  _createClass(Mob, [{
+    key: "move",
+
+    /**
+    * Change the position of the Pacman depending on the direction
+    */
+    value: function move(level) {
+      //prepare variables
+      var xPositionPlusRadius = this.position[0] + this.radius + 1;
+      var xPositionMinusRadius = this.position[0] - this.radius - 1;
+      var yPositionPlusRadius = this.position[1] + this.radius + 1;
+      var yPositionMinusRadius = this.position[1] - this.radius - 1;
+      this.go = [true, true, true, true];
+
+      //Check Collisions
+      this.wallCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius, level);
+      this.boardCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius);
+      if (this.ai === true) this.newDirection();
+
+      //Modify direction
+      if (this.direction[0] && this.go[0]) this.position[1] -= this.speed;
+      if (this.direction[1] && this.go[1]) this.position[1] += this.speed;
+      if (this.direction[2] && this.go[2]) this.position[0] -= this.speed;
+      if (this.direction[3] && this.go[3]) this.position[0] += this.speed;
+    }
+
+    /**
+     * Check the wall collisions and sets the possible directions
+     * @param  {[type]} xPositionPlusRadius  [description]
+     * @param  {[type]} xPositionMinusRadius [description]
+     * @param  {[type]} yPositionPlusRadius  [description]
+     * @param  {[type]} yPositionMinusRadius [description]
+     * @param  {[type]} level                [description]
+     * @return {[type]}                      [description]
+     */
+
+  }, {
+    key: "wallCollision",
+    value: function wallCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius, level) {
+      for (var i = 0; i < level.walls.length; i++) {
+        var startX = level.walls[i].rect[0],
+            startY = level.walls[i].rect[1],
+            endX = level.walls[i].rect[0] + level.walls[i].rect[2],
+            endY = level.walls[i].rect[1] + level.walls[i].rect[3];
+
+        //Control possible direction depending on the actual direction
+        if (yPositionMinusRadius === endY && xPositionMinusRadius < endX && xPositionPlusRadius > startX) this.go[0] = false; //go up
+        if (yPositionPlusRadius === startY && xPositionMinusRadius < endX && xPositionPlusRadius > startX) this.go[1] = false; //go down
+        if (xPositionMinusRadius === endX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[2] = false; //go left
+        if (xPositionPlusRadius === startX && yPositionPlusRadius > startY && yPositionMinusRadius < endY) this.go[3] = false; //go right
+      }
+    }
+    /**
+     * Check the board Collision and resends the mob to the other side
+     * @param  {[type]} xPositionPlusRadius  [description]
+     * @param  {[type]} xPositionMinusRadius [description]
+     * @param  {[type]} yPositionPlusRadius  [description]
+     * @param  {[type]} yPositionMinusRadius [description]
+     * @return {[type]}                      [description]
+     */
+
+  }, {
+    key: "boardCollision",
+    value: function boardCollision(xPositionPlusRadius, xPositionMinusRadius, yPositionPlusRadius, yPositionMinusRadius) {
+      if (xPositionPlusRadius == 0) this.position[0] = this.ctx.canvas.clientWidth;
+      if (xPositionMinusRadius == this.ctx.canvas.clientWidth) this.position[0] = 0;
+      if (yPositionPlusRadius == 0) this.position[1] = this.ctx.canvas.clientHeight;
+      if (yPositionMinusRadius == this.ctx.canvas.clientHeight) this.position[1] = 0;
+    }
+    /**
+     * If ia is true, then we move the mob randomly when he collides
+     * @return {[type]} [description]
+     */
+
+  }, {
+    key: "newDirection",
+    value: function newDirection() {
+      var possibleDirections = [];
+      var changeDirection = false;
+      for (var i = 0; i < this.go.length; i++) {
+        if (this.go[i]) possibleDirections.push(i);
+        if (this.direction[i] === true && this.go[i] === false) changeDirection = true;
+      }
+      //Check if we need to change directions
+      if (changeDirection) {
+        this.direction = [false, false, false, false];
+        var ii = Math.floor(Math.random() * possibleDirections.length);
+        this.direction[possibleDirections[ii]] = true;
+      }
+    }
+  }]);
+
+  return Mob;
+}();
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Pill = exports.Pill = function () {
+  function Pill(ctx, position, type) {
+    _classCallCheck(this, Pill);
+
+    this.ctx = ctx;
+    this.type = type;
+    this.position = position;
+  }
+
+  _createClass(Pill, [{
+    key: "render",
+    value: function render() {
+      this.ctx.beginPath();
+      this.ctx.arc(this.position[0], this.position[1], 3, 0 * Math.PI, 1.75 * Math.PI, false);
+      this.ctx.fillStyle = "white";
+      this.ctx.fill();
+    }
+  }]);
+
+  return Pill;
+}();
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.Game = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _board = __webpack_require__(4);
+var _board = __webpack_require__(5);
 
-var _player = __webpack_require__(6);
+var _level = __webpack_require__(7);
 
-var _ball = __webpack_require__(3);
+var _pacman = __webpack_require__(8);
 
-var _paddle = __webpack_require__(5);
+var _ghost = __webpack_require__(6);
+
+var _pill = __webpack_require__(1);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/**
- * Main function to play the game
- * @param {[type]} widthCanvas  [description]
- * @param {[type]} heightCanvas [description]
- */
 var Game = exports.Game = function () {
   function Game() {
     _classCallCheck(this, Game);
 
-    // Prepare Parameters
-    this.width = 600;
-    this.height = 400;
+    //Initiate variables
+    this.width = 300;
+    this.height = 350;
+    this.ctx = this.prepareDOM();
     this.intervalId = 0;
-    this.players = [];
-    this.maxScore;
 
-    // Prepare DOM
-    this.canvasContext = this.prepareDOM();
-
-    //Create players
-    this.createPlayers();
-
-    //Prepare objects
-    this.board = new _board.Board(this.canvasContext);
-    this.ball = new _ball.Ball(5, [100, 350], this.canvasContext, this.players);
-    this.paddleLeft = new _paddle.Paddle([30, this.height / 2], this.canvasContext);
-    this.paddleRight = new _paddle.Paddle([this.width - 30, this.height / 2], this.canvasContext);
-
-    //Control the events
-    this.listeners();
+    //Create objects
+    this.board = new _board.Board(this.ctx);
+    this.pacman = new _pacman.Pacman(this.ctx, false, "Yellow");
+    this.ghosts = this.createGhosts(6);
+    this.level = new _level.Level(this.ctx);
   }
 
   /**
-  * Method to initiate the game
-  */
+   * Play the game
+   */
 
 
   _createClass(Game, [{
     key: 'play',
     value: function play() {
-      //Create initial board
       this.board.render();
-
-      //Render players
-      for (var i = 0; i < this.players.length; i++) {
-        this.players[i].render();
-      } //Create initial ball
-      this.ball.render();
-      //Create initial paddle
-      this.paddleLeft.render();
-      this.paddleRight.render();
-      //Move the ball
+      this.pacman.render();
+      this.ghosts.forEach(function (element) {
+        return element.render();
+      });
+      this.level.render();
+      this.listeners();
       this.intervalId = setInterval(this.resetCanvas.bind(this), 10);
     }
-  }, {
-    key: 'resetCanvas',
-
 
     /**
-     * Reset the canvas and control if the game is over
-     */
-    value: function resetCanvas() {
-
-      // Render all
-      this.board.render();
-      //Render players
-      for (var i = 0; i < this.players.length; i++) {
-        //If players scores max score
-        if (this.players[i].score === this.maxScore) {
-          this.players[i].winMsg();
-          clearInterval(this.intervalId);
-          setTimeout(function () {
-            if (confirm("Do you want to play again?")) document.location.reload();
-          }, 1000);
-        }
-        this.players[i].render();
-      }
-
-      //Show scores messages
-      this.scoreMessages();
-
-      //Move ball and paddles
-      this.ball.move(this.paddleLeft, this.paddleRight);
-      this.paddleLeft.move();
-      this.paddleRight.move();
-
-      //Render paddles and ball
-      this.paddleLeft.render();
-      this.paddleRight.render();
-      this.ball.render();
-    }
-
-    /**
-     * Prepare the DOM
-     */
+     * Start the Canvas, it saves the canvas context
+       */
 
   }, {
     key: 'prepareDOM',
@@ -194,6 +302,7 @@ var Game = exports.Game = function () {
       canvas.id = "canvas";
       canvas.width = this.width;
       canvas.height = this.height;
+      canvas.style = "border:1px solid #000000;";
       window.document.body.appendChild(canvas);
 
       //Get canvas
@@ -201,7 +310,40 @@ var Game = exports.Game = function () {
     }
 
     /**
-     * Pepare the listeners
+     * Reset all the canvas to do the move effect
+     */
+
+  }, {
+    key: 'resetCanvas',
+    value: function resetCanvas() {
+      this.mobCollision();
+      this.board.render();
+      this.level.render();
+      this.pacman.move(this.level);
+      this.pacman.render();
+      for (var i = 0; i < this.ghosts.length; i++) {
+        this.ghosts[i].move(this.level);
+        this.ghosts[i].render();
+      }
+    }
+    /**
+     * Check if there's a collision between Pacman and the ghosts
+     */
+
+  }, {
+    key: 'mobCollision',
+    value: function mobCollision() {}
+    // for (let i = 0; i < this.ghosts.length; i++) {
+    //   if (this.pacman.position[0] - this.pacman.radius == this.ghosts[i].position[0] + this.ghosts[i].radius
+    //      && this.pacman.position[1] == this.ghosts[i].position[1]){
+    //     alert("got you");
+    //   }
+    // }
+
+
+    /**
+     * Listen for any event in the game
+     * @return {[type]} [description]
      */
 
   }, {
@@ -219,73 +361,47 @@ var Game = exports.Game = function () {
     }
 
     /**
-     * Change objects properties depending on the event runed
-     * @param  {[integer]} keyCode     [description]
-     * @param  {[boolean]} value       [description]
+     * Change the move controllers depending the user
+     * @param  {[integer]} keyCode keycode pressed or unpressed
+     * @param  {[boolean]} value   change the value of the controller
      */
 
   }, {
     key: 'changePropertyEvent',
     value: function changePropertyEvent(keyCode, value) {
       switch (keyCode) {
-        case 87:
-          this.paddleLeft.directionTop = value;
+        case 37:
+          this.pacman.direction[2] = value;
           break;
-        case 83:
-          this.paddleLeft.directionBottom = value;
+        case 38:
+          this.pacman.direction[0] = value;
           break;
-        case 81:
-          this.ball.changeLeftY = value;
+        case 39:
+          this.pacman.direction[3] = value;
           break;
-        case 80:
-          this.paddleRight.directionTop = value;
-          break;
-        case 76:
-          this.paddleRight.directionBottom = value;
-          break;
-        case 186:
-          this.ball.changeRightY = value;
+        case 40:
+          this.pacman.direction[1] = value;
           break;
       }
     }
-
     /**
-     * create players of the game
+     * [createGhosts description]
+     * @param  {[type]} num Max. 5 ghosts
+     * @return {[type]}     [description]
      */
 
   }, {
-    key: 'createPlayers',
-    value: function createPlayers() {
-      //Get player names
-      var firstPlayer = prompt("Please, write the name of the first player. \n You'll play on the left with the keys 'W' and 'S' to move the paddle and 'Q' to change ball direction");
-      var secondPlayer = prompt("Please, write the name of the second player. \n You'll play on the right with the keys 'P' and 'L' and '`' to change ball direction");
-      var scoreMaximum = parseInt(prompt("Please, write the Maximum number of scores to win the game"));
-
-      //Control player, if there's no name, the name will be Player1/Player2
-
-      firstPlayer = firstPlayer === '' ? "Player 1" : firstPlayer;
-      secondPlayer = secondPlayer === '' ? "Player 2" : secondPlayer;
-      if (Number.isInteger(scoreMaximum) === false || scoreMaximum <= 0) {
-        this.maxScore = 1;
-      } else {
-        this.maxScore = scoreMaximum;
+    key: 'createGhosts',
+    value: function createGhosts(num) {
+      var resArr = [];
+      var color = 0;
+      var ghostColors = ["Pink", "Red", "Blue", "Orange", "Brown", "Violet"];
+      for (var i = 0; i < num; i++) {
+        resArr.push(new _ghost.Ghost(this.ctx, true, ghostColors[color]));
+        if (color == ghostColors.length) color = 0;
+        color++;
       }
-      this.players.push(new _player.Player(firstPlayer, [this.width / 2 - 100, 30], this.canvasContext));
-      this.players.push(new _player.Player(secondPlayer, [this.width / 2 + 50, 30], this.canvasContext));
-    }
-
-    /**
-     * Show messages depending on the score
-     */
-
-  }, {
-    key: 'scoreMessages',
-    value: function scoreMessages() {
-      // Actual date to control the score message
-      var actualDate = new Date().getTime();
-      for (var i = 0; i < this.players.length; i++) {
-        if (this.players[i].scoreTime + 2000 >= actualDate && this.players[i].scoreTime != 0) this.players[i].scoreMsg();
-      }
+      return resArr;
     }
   }]);
 
@@ -293,13 +409,13 @@ var Game = exports.Game = function () {
 }();
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(7);
+var content = __webpack_require__(10);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -307,7 +423,7 @@ var transform;
 var options = {}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(9)(content, options);
+var update = __webpack_require__(12)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -324,189 +440,18 @@ if(false) {
 }
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _game = __webpack_require__(0);
-
-__webpack_require__(1);
-
-var game = new _game.Game();
-game.play();
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * We create the object ball
- * @type {Object}
- */
-var Ball = exports.Ball = function () {
-  function Ball(radius, position, ctx, players) {
-    _classCallCheck(this, Ball);
-
-    this.radius = radius;
-    this.position = position;
-    this.ctx = ctx;
-    this.players = players;
-    this.speed = 0.1;
-    this.changeRightY = false;
-    this.changeLeftY = false;
-    //Direction defines if we need to increment or decrement the move
-    this.direction = [2, 2];
-  }
-
-  /**
-   * Renders the ball in the canvas
-   */
-
-
-  _createClass(Ball, [{
-    key: 'render',
-    value: function render() {
-      this.ctx.beginPath();
-      this.ctx.arc(this.position[0], this.position[1], this.radius, 0, 2 * Math.PI);
-      this.ctx.fillStyle = 'white';
-      this.ctx.fill();
-      this.ctx.stroke();
-    }
-  }, {
-    key: 'move',
-
-
-    /**
-     * Move the ball and checks the collision with the paddles
-     * @param  {[object]} paddleLeft  Left paddle
-     * @param  {[object]} paddleRight Right paddle
-     */
-    value: function move(paddleLeft, paddleRight) {
-      var xPositionRadius = this.position[0] + this.radius * this.direction[0];
-      var yPositionRadius = this.position[1] + this.radius * this.direction[1];
-      this.paddleColission(paddleLeft, paddleRight, xPositionRadius, yPositionRadius);
-      this.boardCollision(xPositionRadius, yPositionRadius);
-
-      //Move the ball
-      this.position[0] += this.direction[0];
-      this.position[1] += this.direction[1];
-    }
-  }, {
-    key: 'boardCollision',
-    value: function boardCollision(xPositionRadius, yPositionRadius) {
-
-      if (yPositionRadius <= 0) {
-        this.direction[1] *= -1;
-        this.position[1] = 0 + this.radius;
-      };
-      if (yPositionRadius >= this.ctx.canvas.clientHeight) {
-        this.direction[1] *= -1;
-        this.position[1] = this.ctx.canvas.clientHeight - this.radius;
-      };
-      if (xPositionRadius <= 0) {
-        this.direction[0] *= -1;
-        this.position[0] = 0 + this.radius;
-        this.players[1].score++;
-        this.players[1].scoreTime = new Date().getTime();
-      };
-      if (xPositionRadius >= this.ctx.canvas.clientWidth) {
-        this.direction[0] *= -1;
-        this.position[0] = this.ctx.canvas.clientWidth - this.radius;
-        this.players[0].score++;
-        this.players[0].scoreTime = new Date().getTime();
-      }
-    }
-
-    /**
-     * [description]
-     * @param  {[object]} paddleLeft  Left paddle object
-     * @param  {[object]} paddleRight Right paddle object
-     */
-
-  }, {
-    key: 'paddleColission',
-    value: function paddleColission(paddleLeft, paddleRight, xPositionRadius, yPositionRadius) {
-      //Check the paddleLeft position for the collision
-      if (this.position[0] - this.radius <= paddleLeft.position[0] + paddleLeft.width && this.position[1] >= paddleLeft.position[1] && this.position[1] <= paddleLeft.position[1] + paddleLeft.height && this.direction[0] < 0) {
-        this.position[0] = paddleLeft.position[0] + paddleLeft.width + this.radius;
-        this.direction[0] *= this.direction[0] > -5 ? -1 - this.speed : -1;
-        if (this.changeLeftY === true) this.direction[1] *= -1;
-      }
-
-      //Check the paddleRight position for the collision
-      if (this.position[0] + this.radius >= paddleRight.position[0] && this.position[1] >= paddleRight.position[1] && this.position[1] <= paddleRight.position[1] + paddleRight.height && this.direction[0] > 0) {
-        this.position[0] = paddleRight.position[0] - this.radius;
-        this.direction[0] *= this.direction[0] < 5 ? -1 - this.speed : -1;
-        if (this.changeRightY === true) this.direction[1] *= -1;
-      }
-    }
-  }]);
-
-  return Ball;
-}();
-
-/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
+var _game = __webpack_require__(2);
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+__webpack_require__(3);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Object Board
- * @param {[object]} ctx Canvas context
- */
-var Board = exports.Board = function () {
-  function Board(ctx) {
-    _classCallCheck(this, Board);
-
-    this.ctx = ctx;
-  }
-
-  /**
-   * Renders the Board in the canvas
-   */
-
-
-  _createClass(Board, [{
-    key: 'render',
-    value: function render() {
-      //draw the board
-      this.ctx.fillStyle = '#FD8844';
-      this.ctx.fillRect(0, 0, this.ctx.canvas.clientWidth, this.ctx.canvas.clientHeight);
-
-      //draw the line
-      this.ctx.beginPath();
-      this.ctx.moveTo(this.ctx.canvas.clientWidth / 2, 0);
-      this.ctx.lineTo(this.ctx.canvas.clientWidth / 2, this.ctx.canvas.clientHeight);
-      this.ctx.strokeStyle = 'white';
-      this.ctx.stroke();
-    }
-  }]);
-
-  return Board;
-}();
+var game = new _game.Game();
+game.play();
 
 /***/ }),
 /* 5 */
@@ -523,57 +468,292 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/**
- * Defines the paddle to be played
- * @param {[object]} ctx Canvas ctx
- */
-var Paddle = exports.Paddle = function () {
-  function Paddle(position, ctx) {
-    _classCallCheck(this, Paddle);
+var Board = exports.Board = function () {
+  function Board(ctx) {
+    _classCallCheck(this, Board);
 
     this.ctx = ctx;
-    this.position = position;
-    this.width = 15;
-    this.height = 60;
-    this.speed = 4;
-    this.direction = 0;
   }
 
-  /**
-   * Renders the paddle in the canvas
-   */
-
-
-  _createClass(Paddle, [{
+  _createClass(Board, [{
     key: 'render',
     value: function render() {
-      this.ctx.fillStyle = 'rgba(0, 0, 255, 0.30';
-      this.ctx.fillRect(this.position[0], this.position[1], this.width, this.height);
-    }
-  }, {
-    key: 'move',
-
-
-    /**
-     * Move the paddle, the paddle must be moved only horizontal
-     */
-    value: function move() {
-
-      //We don't allow the paddle to go out from the board
-      //But we move to the top or bottom depending on the key pressed
-      if (this.directionTop == true) this.position[1] += -this.speed;
-      if (this.directionBottom == true) this.position[1] += this.speed;
-      if (this.direction == 0) this.position[1];
-      if (this.position[1] < 0) this.position[1] = 0;
-      if (this.position[1] > this.ctx.canvas.clientHeight - this.height) this.position[1] = this.ctx.canvas.clientHeight - this.height;
+      //draw the board
+      this.ctx.fillStyle = 'black';
+      this.ctx.fillRect(0, 0, this.ctx.canvas.clientWidth, this.ctx.canvas.clientHeight);
     }
   }]);
 
-  return Paddle;
+  return Board;
 }();
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Ghost = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _mob = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Ghost = exports.Ghost = function (_Mob) {
+  _inherits(Ghost, _Mob);
+
+  function Ghost(ctx, ai, color) {
+    _classCallCheck(this, Ghost);
+
+    var _this = _possibleConstructorReturn(this, (Ghost.__proto__ || Object.getPrototypeOf(Ghost)).call(this, ctx, ai, color));
+
+    _this.ctx = ctx;
+    _this.speed = 1;
+    // "up", "down", "left", "right" Direction to move
+    _this.direction = [true, false, false, false];
+    _this.position = [150, 150];
+    return _this;
+  }
+
+  _createClass(Ghost, [{
+    key: "render",
+    value: function render() {
+      this.ctx.fillStyle = this.color;
+      this.ctx.fillRect(this.position[0] - this.radius, this.position[1], this.radius * 2, this.radius);
+      this.ctx.beginPath();
+      this.ctx.arc(this.position[0], this.position[1], this.radius, 1 * Math.PI, 0 * Math.PI, false);
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(this.position[0] - 3, this.position[1], 2, 0 * Math.PI, 1.75 * Math.PI, false);
+      this.ctx.fillStyle = "black";
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(this.position[0] + 4, this.position[1], 2, 0 * Math.PI, 1.75 * Math.PI, false);
+      this.ctx.fillStyle = "black";
+      this.ctx.fill();
+    }
+  }]);
+
+  return Ghost;
+}(_mob.Mob);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Level = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _wall = __webpack_require__(9);
+
+var _pill = __webpack_require__(1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Level = exports.Level = function () {
+  function Level(ctx) {
+    _classCallCheck(this, Level);
+
+    this.ctx = ctx;
+    this.matrix = this.setMatrix();
+    this.walls = this.createWalls();
+    this.pills = this.createPills();
+  }
+
+  _createClass(Level, [{
+    key: 'render',
+    value: function render() {
+      this.walls.forEach(function (element) {
+        return element.render();
+      });
+      this.pills.forEach(function (element) {
+        return element.render();
+      });
+    }
+  }, {
+    key: 'setMatrix',
+    value: function setMatrix() {
+      return [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+    }
+  }, {
+    key: 'createWalls',
+    value: function createWalls() {
+      var _this = this;
+
+      var poolWalls = [];
+      var counterx = 0;
+      var countery = 0;
+
+      //create from matrix
+      for (var i = 0; i < this.matrix.length; i++) {
+        if (counterx == 30) {
+          counterx = 0;
+          countery++;
+        }
+        if (this.matrix[i] == 1) {
+          if (this.matrix[i - 1] == 1 && counterx != 30 && counterx != 0) {
+            poolWalls[poolWalls.length - 1][2] += 10;
+          } else {
+            poolWalls.push([counterx * 10, countery * 10, 10, 10]);
+          }
+        }
+        counterx++;
+      }
+
+      //Merge blocks
+      var finalPoolWalls = [];
+      var createNormal = false;
+      for (var _i = 0; _i < poolWalls.length; _i++) {
+        createNormal = true;
+        for (var u = 0; _i < finalPoolWalls.length; u++) {
+          if (finalPoolWalls[u][0] == poolWalls[_i][0] && finalPoolWalls[u][2] == poolWalls[_i][2] && finalPoolWalls[u][1] + finalPoolWalls[u][3] == poolWalls[_i][1]) {
+            finalPoolWalls[u][3] += poolWalls[_i][3];
+            createNormal = false;
+          }
+        }
+        if (createNormal == true) finalPoolWalls.push(poolWalls[_i]);
+      }
+
+      var walls = [];
+      poolWalls.forEach(function (element) {
+        return walls.push(new _wall.Wall(_this.ctx, element));
+      });
+      console.log(finalPoolWalls.length);
+      console.log(walls.length);
+      return walls;
+    }
+  }, {
+    key: 'createPills',
+    value: function createPills() {
+      var _this2 = this;
+
+      var poolPills = [[20, 20], [43, 20], [66, 20], [89, 20], [112, 20], [135, 20], [165, 20], [188, 20], [211, 20], [234, 20], [257, 20], [280, 20]];
+      //let poolPills = [];
+      //while(let i != 0)
+      var pills = [];
+      poolPills.forEach(function (element) {
+        return pills.push(new _pill.Pill(_this2.ctx, element));
+      });
+      return pills;
+    }
+  }]);
+
+  return Level;
+}();
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Pacman = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _mob = __webpack_require__(0);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Pacman = exports.Pacman = function (_Mob) {
+  _inherits(Pacman, _Mob);
+
+  function Pacman(ctx, ai, color) {
+    _classCallCheck(this, Pacman);
+
+    var _this = _possibleConstructorReturn(this, (Pacman.__proto__ || Object.getPrototypeOf(Pacman)).call(this, ctx, ai, color));
+
+    _this.ctx = ctx;
+    _this.speed = 1;
+    // "up", "down", "left", "right" Direction to move
+    _this.direction = [false, false, false, false]; //
+    _this.position = [151, 245];
+    return _this;
+  }
+
+  _createClass(Pacman, [{
+    key: "render",
+
+    /**
+     * Render the pacman in the screen depending on the position of the object
+     * @return {[type]} [description]
+     */
+    value: function render() {
+      var headDirection = this.checkHeadDirection();
+      this.ctx.beginPath();
+      this.ctx.arc(this.position[0], this.position[1], this.radius, headDirection["arc1Start"], headDirection["arc1End"], false);
+      this.ctx.fillStyle = this.color;
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(this.position[0], this.position[1], this.radius, headDirection["arc2Start"], headDirection["arc2End"], false);
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(headDirection["eyeX"], headDirection["eyeY"], 2, 0 * Math.PI, 1.75 * Math.PI, false);
+      this.ctx.fillStyle = "black";
+      this.ctx.fill();
+    }
+  }, {
+    key: "checkHeadDirection",
+    value: function checkHeadDirection() {
+      //Change mouth position
+      var head = {};
+      head["arc1Start"] = 0.25 * Math.PI;
+      head["arc1End"] = 1.25 * Math.PI;
+      head["arc2Start"] = 0.75 * Math.PI;
+      head["arc2End"] = 1.75 * Math.PI;
+      head["eyeX"] = this.position[0] + 2, head["eyeY"] = this.position[1] - 6;
+      if (this.direction[0] === true) {
+        head["arc2Start"] = 1.75 * Math.PI;
+        head["arc2End"] = 0.75 * Math.PI;
+        head["eyeX"] = this.position[0] - 6, head["eyeY"] = this.position[1] - 2;
+      }
+      if (this.direction[1] === true) {
+        head["arc1Start"] = 0.75 * Math.PI;
+        head["arc1End"] = 1.75 * Math.PI;
+        head["arc2Start"] = 1.25 * Math.PI;
+        head["arc2End"] = 0.25 * Math.PI;
+        head["eyeX"] = this.position[0] + 6, head["eyeY"] = this.position[1] + 2;
+      }
+      if (this.direction[2] === true) {
+        head["arc1Start"] = 1.25 * Math.PI;
+        head["arc1End"] = 0.25 * Math.PI;
+        head["arc2Start"] = 1.75 * Math.PI;
+        head["arc2End"] = 0.75 * Math.PI;
+      }
+      return head;
+    }
+  }]);
+
+  return Pacman;
+}(_mob.Mob);
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -587,67 +767,41 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-/**
- * Player attributes
- * @param  {[string]} name name of the player
- */
-var Player = exports.Player = function () {
-  function Player(name, position, context) {
-    _classCallCheck(this, Player);
+var Wall = exports.Wall = function () {
+  function Wall(ctx, rect) {
+    _classCallCheck(this, Wall);
 
-    this.context = context;
-    this.position = position;
-    this.name = name;
-    this.score = 0;
-    this.scoreTime = 0;
+    this.ctx = ctx;
+    this.rect = rect;
   }
 
-  _createClass(Player, [{
-    key: "render",
+  _createClass(Wall, [{
+    key: 'render',
     value: function render() {
-      var textToShow = this.name + ": " + this.score;
-      this.context.font = "20px Calibri";
-      this.context.fillStyle = "white";
-      this.context.fillText(textToShow, this.position[0], this.position[1]);
-    }
-  }, {
-    key: "scoreMsg",
-    value: function scoreMsg() {
-      this.context.font = "20px Calibri";
-      this.context.textAlign = "center";
-      this.context.fillStyle = "pink";
-      this.context.fillText("Gotcha!", this.context.canvas.clientWidth / 2, 75);
-    }
-  }, {
-    key: "winMsg",
-    value: function winMsg() {
-      this.context.font = "50px Calibri";
-      this.context.fillStyle = "green";
-      this.context.textAlign = "center";
-      var msg = this.name + " WINS!!";
-      this.context.fillText(msg, this.context.canvas.clientWidth / 2, this.context.canvas.clientHeight / 2);
+      this.ctx.fillStyle = 'white';
+      this.ctx.fillRect(this.rect[0], this.rect[1], this.rect[2], this.rect[3]);
     }
   }]);
 
-  return Player;
+  return Wall;
 }();
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(8)(undefined);
+exports = module.exports = __webpack_require__(11)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "html, body {\r\n  max-width: 100%;\r\n  overflow-x: hidden;\r\n}\r\ncanvas{\r\n  position: absolute;\r\n  top: 15%;\r\n  left: 25%;\r\n  border: solid 1px rgba(178, 95, 124, 1));\r\n}\r\n", ""]);
+exports.push([module.i, "html, body {\r\n  max-width: 100%;\r\n  overflow-x: hidden;\r\n}\r\ncanvas{\r\n  position: absolute;\r\n  top: 15%;\r\n  left: 25%;\r\n}\r\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /*
@@ -729,7 +883,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -766,7 +920,7 @@ var stylesInDom = {},
 	singletonElement = null,
 	singletonCounter = 0,
 	styleElementsInsertedAtTop = [],
-	fixUrls = __webpack_require__(10);
+	fixUrls = __webpack_require__(13);
 
 module.exports = function(list, options) {
 	if(typeof DEBUG !== "undefined" && DEBUG) {
@@ -1042,7 +1196,7 @@ function updateLink(linkElement, options, obj) {
 
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports) {
 
 
