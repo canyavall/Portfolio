@@ -40,7 +40,7 @@ export default class App extends Component {
     }else{
       cart[id] = 1;
     }
-    totalCart += this.state.products[id].price;
+    totalCart += this.state.products[id].price - (this.state.products[id].price * this.state.discount[this.state.products[id].discount][1]);
 
     this.setState({cart, totalCart});
   }
@@ -53,7 +53,7 @@ export default class App extends Component {
     }else{
       delete cart[id];
     }
-    totalCart -= this.state.products[id].price;
+    totalCart -= this.state.products[id].price - (this.state.products[id].price * this.state.discount[this.state.products[id].discount][1]);
 
     this.setState({cart, totalCart});
   }
