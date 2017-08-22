@@ -37,6 +37,7 @@ The code written in each of this exercises are homemade, none was copied or any 
   * countOnes: Count all set bits between a range of numbers
   * rot13: Cypher in rot13
   * battleShips: Like the game
+  * rectangleRotation: A rectangle with sides equal to even integers a and b is drawn on the Cartesian plane. Its center (the intersection point of its diagonals) coincides with the point (0, 0), but the sides of the rectangle are not parallel to the axes; instead, they are forming 45 degree angles with the axes.
 
 * Java
   * findLetter: Finds a missing char in one string
